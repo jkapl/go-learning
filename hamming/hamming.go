@@ -2,6 +2,8 @@ package hamming
 
 import "errors"
 
+// Distance returns the Hamming distance between two strings
+// It returns the distance as an int or an error
 func Distance(a, b string) (int, error) {
 	dist := 0
 	bLen := len(b)
@@ -16,7 +18,6 @@ func Distance(a, b string) (int, error) {
 	}
 	if len(b) != len(a) {
 		return 0, errors.New("Length erro")
-	} else {
-		return dist, nil
 	}
+	return dist, nil
 }
