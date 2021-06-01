@@ -2,12 +2,13 @@ package isogram
 
 import "unicode"
 
-func IsIsogram (s string) bool {
+// IsIsogram checks if a string is an isogram
+func IsIsogram(s string) bool {
 	m := make(map[rune]bool)
 	for _, val := range s {
-		if val == '-' || val == ' ' {
+		if !(unicode.IsLetter(val)) {
 			continue
-		}  
+		}
 		val = unicode.ToLower(val)
 		if m[val] {
 			return false
