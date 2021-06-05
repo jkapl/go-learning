@@ -1,31 +1,39 @@
 package luhn
 
-import ( 
-	"strings"
+import (
 	"strconv"
+	"strings"
 	"unicode"
 )
 
-func Valid (i string) bool {
-	if len(i) <= 1 {
+
+// Valid returns true if the input string satisfies the Luhn algorithm
+func Valid(i string) bool {
+	noSpaces := strings.ReplaceAll(i, " ", "")
+	if len(noSpaces) <= 1 {
 		return false
 	}
-	noSpaces := strings.ReplaceAll(i, " ", "")
+	r := []rune(noSpaces)
 	sum := 0
-	for i, v := range noSpaces {
-		if (unicode.IsDigit(v)) {
-			num, _ := strconv.Atoi(string(v))
-			if i % 2 == 0 {
+	index := 0
+	for i := len(r) - 1; i >= 0; i-- {
+		if unicode.IsDigit(r[i]) {
+			num, _ := strconv.Atoi(string(r[i]))
+			if index%2 == 1 {
 				num *= 2
-				if (num > 9) {
+				if num > 9 {
 					num -= 9
 				}
+				sum += num
+			} else {
+				sum += num
 			}
-			sum += num
+			index++
+		} else {
+			return false
 		}
-		return false
 	}
-	if sum % 10 == 0 {
+	if sum%10 == 0 {
 		return true
 	}
 	return false
