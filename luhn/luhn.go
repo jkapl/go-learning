@@ -5,28 +5,26 @@ import (
 	"unicode"
 )
 
-// intValid returns true if the input string satisfies the Luhn algorithm
-func Valid(i string) bool {
-	noSpaces := strings.ReplaceAll(i, " ", "")
-	if len(noSpaces) <= 1 {
+// Valid returns true if the id string satisfies the Luhn algorithm
+func Valid(id string) bool {
+	id = strings.ReplaceAll(id, " ", "")
+	if len(id) <= 1 {
 		return false
 	}
 	sum := 0
-	even := len(noSpaces)%2 == 0
-	for _, v := range noSpaces {
+	even := len(id)%2 == 0
+	for _, v := range id {
 		if !unicode.IsDigit(v) {
 			return false
 		}
-		intV := int(v - '0')
+		digit := int(v - '0')
 		if even {
-			intV *= 2
-			if intV > 9 {
-				intV -= 9
+			digit *= 2
+			if digit > 9 {
+				digit -= 9
 			}
-			sum += intV
-		} else {
-			sum += intV
 		}
+		sum += digit
 		even = !even
 	}
 	return sum%10 == 0
