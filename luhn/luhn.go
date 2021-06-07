@@ -11,14 +11,14 @@ func Valid(i string) bool {
 	if len(noSpaces) <= 1 {
 		return false
 	}
-	r := []rune(noSpaces)
 	sum := 0
-	for i, v := range r {
+	even := len(noSpaces)%2 == 0
+	for _, v := range noSpaces {
 		if !unicode.IsDigit(v) {
 			return false
 		}
 		intV := int(v - '0')
-		if (len(r)-1-i)%2 == 1 {
+		if even {
 			intV *= 2
 			if intV > 9 {
 				intV -= 9
@@ -27,6 +27,7 @@ func Valid(i string) bool {
 		} else {
 			sum += intV
 		}
+		even = !even
 	}
 	return sum%10 == 0
 }
