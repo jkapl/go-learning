@@ -32,7 +32,7 @@ func Encode(s string) string {
 		r = sq
 	} 
 	for i, val := range normalized {
-
+			
 	}
 
 
