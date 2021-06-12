@@ -2,18 +2,16 @@ package grains
 
 import "errors"
 
+// Total returns 2^64 using bit manipulation
 func Total() uint64 {
 	var sum uint64 = 1
-	// sum = 1
 	for i := 1; i <= 64; i++ {
-		// sum*=2
 		sum = sum << 1
-		// fmt.Println(sum)
 	}
-	// fmt.Println(sum)
 	return sum - 1
 }
 
+// Square returns 2^n where n is the input
 func Square(sq int) (uint64, error) {
 	var value uint64 = 1
 	if sq <= 0 || sq > 64 {
