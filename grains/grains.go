@@ -5,10 +5,7 @@ import "errors"
 // Total returns 2^64 using bit manipulation
 func Total() uint64 {
 	var sum uint64 = 1
-	for i := 1; i <= 64; i++ {
-		sum = sum << 1
-	}
-	return sum - 1
+	return ((sum << 63) * 2) - 1
 }
 
 // Square returns 2^n where n is the input
