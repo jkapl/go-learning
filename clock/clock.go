@@ -1,6 +1,9 @@
 package clock
 
-import "math"
+import (
+	"math"
+	"strconv"
+)
 
 type Clock struct {
 	hour, minute int
@@ -8,27 +11,45 @@ type Clock struct {
 
 func New(hour, minute int) Clock {
 	totalMin := (hour * 60) + minute 
-	if totalMin < 0 {
-
-	}
 	hours := int(math.Floor(float64(totalMin) / 60))
 	mins := int(totalMin % 60)
 	
-	c := Clock{hours, mins}
-	return c
-	
+	if totalMin < 0 {
+		finalHour := 24 - hours;
+		finalMin := 60 - mins;
+		return Clock{finalHour, finalMin}
+	}
+
+	return Clock{hours, mins}
 }
 
 func (c Clock) String() string {
-	return string(c.hour) + ":" + string(c.minute)
+	var hour string
+	var minute string
+	if (c.hour < 10) {
+		hour = "0" + strconv.Itoa(c.hour)
+	} else {
+		hour = strconv.Itoa(c.hour)
+	}
+	if (c.minute < 10) {
+		minute = "0" + strconv.Itoa(c.minute)
+	} else {
+		minute = strconv.Itoa(c.minute)
+	}
+	return hour + ":" + minute
+	
 }
 
 func (c Clock) Add(minutes int) Clock {
-	// if minutes >= 60
-	return Clock{1,1}
+	hours := int(c.hour)
+	minute := int(c.minute)
+	newMinutes := minutes + minute
+	return Clock{hours,newMinutes}
 }
 
 func (c Clock) Subtract(minutes int) Clock {
-
-	return Clock{1,1}
+	hours := int(c.hour)
+	minute := int(c.minute)
+	newMinutes := minute - minutes
+	return Clock{hours,newMinutes}
 }
